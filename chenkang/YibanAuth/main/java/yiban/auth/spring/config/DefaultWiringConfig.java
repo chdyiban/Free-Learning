@@ -1,4 +1,4 @@
-package yiban.auth.spring;
+package yiban.auth.spring.config;
 
 import javax.sql.DataSource;
 
