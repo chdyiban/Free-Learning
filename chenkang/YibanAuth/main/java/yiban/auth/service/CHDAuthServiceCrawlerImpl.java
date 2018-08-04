@@ -7,14 +7,14 @@ import org.jsoup.*;
 import org.jsoup.Connection.*;
 import org.jsoup.nodes.*;
 
-public class CHDLoginer {
+public class CHDAuthServiceCrawlerImpl implements CHDAuthService {
 	
 	private final String URL;
 	// Handle SINGLE connection to avoid logging out.  
 	private Connection ct; 
 	private Map<String, String> cookies;
 	
-	public CHDLoginer(String targetUrl) {
+	public CHDAuthServiceCrawlerImpl(String targetUrl) {
 		URL = targetUrl;
 		ct = Jsoup.connect(URL);
 	}

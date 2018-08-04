@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.yiban.open.Uis;
 import yiban.auth.beans.AuthInfo;
 import yiban.auth.beans.UserInfo;
-import yiban.auth.service.CHDLoginer;
+import yiban.auth.service.CHDAuthServiceCrawlerImpl;
 import yiban.auth.service.UserQuery;
 
 @Controller
@@ -32,7 +32,7 @@ public class AuthController {
 	@ResponseBody
 	public String login(@ModelAttribute AuthInfo info, String serviceUrl) {
 		String authUrl = CHD_AUTH_URL + serviceUrl;
-		CHDLoginer loginer = new CHDLoginer(authUrl);
+		CHDAuthServiceCrawlerImpl loginer = new CHDAuthServiceCrawlerImpl(authUrl);
 		boolean loginFlag = loginer.login(info.getUserName(), info.getPassWord());
 		
 		if(loginFlag) return "Login Success!";
@@ -53,10 +53,11 @@ public class AuthController {
 		String user = request.getHeader("user");
 		String pwd = request.getHeader("pwd");
 		
-		CHDLoginer loginer = new CHDLoginer(authUrl);
+		CHDAuthServiceCrawlerImpl loginer = new CHDAuthServiceCrawlerImpl(authUrl);
 		boolean loginFlag = loginer.login(user, pwd);
 		
 		if(!loginFlag) {
+			response.setStatus(401);
 			response.setHeader("SuccessFlag", "false");
 		}
 		else {
@@ -70,6 +71,7 @@ public class AuthController {
 				uis.run(userInfo.toMap());
 			} catch (Exception e) {
 				e.printStackTrace();
+				response.setStatus(500);
 				response.setHeader("SuccessFlag", "false");
 			}
 		}

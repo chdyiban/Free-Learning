@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import yiban.auth.beans.StudentInfo;
 import yiban.auth.beans.TeacherInfo;
 import yiban.auth.beans.UserInfo;
-import yiban.auth.spring.DefaultWiringConfig;
+import yiban.auth.spring.config.DefaultWiringConfig;
 
 @Repository
 public class UserRepository {
