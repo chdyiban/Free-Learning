@@ -3,8 +3,6 @@ package yiban.auth.service;
 import java.io.*;
 import java.util.*;
 
-import javax.security.auth.login.LoginException;
-
 import org.jsoup.*;
 import org.jsoup.Connection.*;
 import org.jsoup.nodes.*;
@@ -21,7 +19,7 @@ public class CHDLoginer {
 		ct = Jsoup.connect(URL);
 	}
 	
-	public Map<String, String> login(String userName, String passwd) throws LoginException {
+	public boolean login(String userName, String passwd) {
 			ct.header("User-Agent",
 	                "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0");
 			try {
@@ -56,14 +54,18 @@ public class CHDLoginer {
 						.execute();
 				
 				cookies = loginResponse.cookies();
-				Map<String, String> resultMap = loginResponse.headers();				
 				
-				// TODO How to identify a successful login?
-				return resultMap;
+				/* TODO How to identify a successful login? "CASTGC" in cookies! ...But unsafe!
+				 * Consider school's CAS Server:
+				 * http://ids.chd.edu.cn/authserver/services/j_spring_cas_security_check?ticket=...
+				 */
+				System.out.println(cookies);
+				if(cookies.containsKey("CASTGC"))	return true;
+				else 								return false;
 				
 			} catch(IOException e) { 
 				System.err.println(" [!] Login Failed!");
-				return null;
+				return false;
 			}
 		}
 		
