@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 
-public class YibanCasAuthApplication {
+public class YibanCASAuthApplication {
 	
 	public static void main(String[] args) {
-		SpringApplication.run(YibanCasAuthApplication.class, args);
+		SpringApplication.run(YibanCASAuthApplication.class, args);
 	}
 	
 }

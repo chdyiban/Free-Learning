@@ -3,6 +3,7 @@ package yiban.auth.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,18 +11,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.yiban.open.Uis;
 import yiban.auth.beans.AuthInfo;
 import yiban.auth.beans.UserInfo;
-import yiban.auth.service.CHDAuthServiceCrawlerImpl;
-import yiban.auth.service.UserQuery;
+import yiban.auth.service.CHDCwlAuthService;
+import yiban.auth.service.YibanProcessingService;
+import yiban.auth.service.UserQueryService;
 
 @Controller
 @RequestMapping("/auth")
 /**
- * CAS用户认证控制器。提供用户名和密码，认证失败返回错误信息，成功返回加密的用户信息。
+ * CAS用户认证控制器。提供用户名和密码，认证失败返回错误信息，成功返回加密的用户信息。<p>
+ * 使用传统爬虫技术进行认证。<p>
  * TODO 这个模块太复杂，考虑拆分为认证 + 查库 + 加密3个，但拆分开之后也要考虑安全问题（如控制器的访问权）。
- * @author gxbhck
+ * @deprecated 该类的验证原理是基于CAS服务器分发的cookies，而非持有票据并返回服务器验证。<p>
+ * 				若要使用该模块，应将Spring的CASConfig文件禁用。
+ * @author ourck
  */
 public class AuthController {
 	
@@ -32,7 +36,7 @@ public class AuthController {
 	@ResponseBody
 	public String login(@ModelAttribute AuthInfo info, String serviceUrl) {
 		String authUrl = CHD_AUTH_URL + serviceUrl;
-		CHDAuthServiceCrawlerImpl loginer = new CHDAuthServiceCrawlerImpl(authUrl);
+		CHDCwlAuthService loginer = new CHDCwlAuthService(authUrl);
 		boolean loginFlag = loginer.login(info.getUserName(), info.getPassWord());
 		
 		if(loginFlag) return "Login Success!";
@@ -53,7 +57,7 @@ public class AuthController {
 		String user = request.getHeader("user");
 		String pwd = request.getHeader("pwd");
 		
-		CHDAuthServiceCrawlerImpl loginer = new CHDAuthServiceCrawlerImpl(authUrl);
+		CHDCwlAuthService loginer = new CHDCwlAuthService(authUrl);
 		boolean loginFlag = loginer.login(user, pwd);
 		
 		if(!loginFlag) {
@@ -61,19 +65,32 @@ public class AuthController {
 			response.setHeader("SuccessFlag", "false");
 		}
 		else {
-			UserInfo userInfo = UserQuery.findByID(user);
+			UserInfo userInfo = UserQueryService.findByID(user);
 			response.setStatus(200);
 			response.setHeader("SuccessFlag", "true");
-			
-			Uis uis = Uis.getInstance();
 			try {
-				uis.setup(response, serviceUrl, "src/main/resources/pkcs8_priv.pem"); // TODO 如何访问工程资源？
-				uis.run(userInfo.toMap());
+				YibanProcessingService.run(response, userInfo);
 			} catch (Exception e) {
 				e.printStackTrace();
 				response.setStatus(500);
-				response.setHeader("SuccessFlag", "false");
 			}
+		}
+	}
+	
+	@RequestMapping(value = "/cas", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public void query(String url, HttpServletRequest request, HttpServletResponse response) { 
+		// 在到达这里之前 一定是通过了CAS认证的
+		System.out.println(url);
+		String user = request.getRemoteUser();
+
+		UserInfo userInfo = UserQueryService.findByID(user);
+		response.setHeader("SuccessFlag", "true");
+		try {
+			YibanProcessingService.run(response, userInfo, url);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setStatus(500);
+			response.setHeader("SuccessFlag", "false");
 		}
 	}
 	

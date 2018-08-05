@@ -16,11 +16,16 @@ import org.springframework.stereotype.Component;
  */
 @Configuration
 @Component
-public class DefaultCasConfig {
+public class DefaultCASConfig {
 
 	private static final String CAS_SERVER_PREFIX = "http://123.56.24.172:8080/cas";//"http://ids.chd.edu.cn/authserver";
 	private static final String CAS_SERVER_LOGIN_URL = "http://123.56.24.172:8080/cas/login";
 	private static final String CAS_CLIENT_HOSTNAME = "http://192.168.2.11:8080";
+	
+	/**
+	 * 指定本CAS客户端 要启用CAS认证的资源的 url模式
+	 */
+	private static final String CAS_URL_PATTERN = "/auth/cas/*";
 	
 	@Bean
 	public FilterRegistrationBean<AuthenticationFilter> authenticationFilterRegistrationBean() {
@@ -32,7 +37,7 @@ public class DefaultCasConfig {
 		authenticationFilter.setInitParameters(initParameters);
 		authenticationFilter.setOrder(2);
 		List<String> urlPatterns = new ArrayList<String>();
-		urlPatterns.add("/*");// 设置匹配的url
+		urlPatterns.add(CAS_URL_PATTERN);// 设置匹配的url
 		authenticationFilter.setUrlPatterns(urlPatterns);
 		return authenticationFilter;
 	}
@@ -47,7 +52,7 @@ public class DefaultCasConfig {
 		authenticationFilter.setInitParameters(initParameters);
 		authenticationFilter.setOrder(1);
 		List<String> urlPatterns = new ArrayList<String>();
-		urlPatterns.add("/*");// 设置匹配的url
+		urlPatterns.add(CAS_URL_PATTERN);// 设置匹配的url
 		authenticationFilter.setUrlPatterns(urlPatterns);
 		return authenticationFilter;
 	}
@@ -58,7 +63,7 @@ public class DefaultCasConfig {
 		authenticationFilter.setFilter(new HttpServletRequestWrapperFilter());
 		authenticationFilter.setOrder(3);
 		List<String> urlPatterns = new ArrayList<String>();
-		urlPatterns.add("/*");// 设置匹配的url
+		urlPatterns.add(CAS_URL_PATTERN);// 设置匹配的url
 		authenticationFilter.setUrlPatterns(urlPatterns);
 		return authenticationFilter;
 	}
@@ -69,7 +74,7 @@ public class DefaultCasConfig {
 		authenticationFilter.setFilter(new AssertionThreadLocalFilter());
 		authenticationFilter.setOrder(4);
 		List<String> urlPatterns = new ArrayList<String>();
-		urlPatterns.add("/*");// 设置匹配的url
+		urlPatterns.add(CAS_URL_PATTERN);// 设置匹配的url
 		authenticationFilter.setUrlPatterns(urlPatterns);
 		return authenticationFilter;
 	}
