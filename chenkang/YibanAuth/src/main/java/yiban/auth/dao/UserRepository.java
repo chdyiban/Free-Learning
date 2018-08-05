@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import yiban.auth.beans.StudentInfo;
 import yiban.auth.beans.TeacherInfo;
 import yiban.auth.beans.UserInfo;
-import yiban.auth.spring.config.DefaultWiringConfig;
+import yiban.auth.spring.config.DefaultDataSourceConfig;
 
 @Repository
 public class UserRepository {
@@ -35,7 +35,7 @@ public class UserRepository {
 	}
 
 	public UserRepository() {
-		ctxt = new AnnotationConfigApplicationContext(DefaultWiringConfig.class);
+		ctxt = new AnnotationConfigApplicationContext(DefaultDataSourceConfig.class);
 		jdbcTemplate = ctxt.getBean(JdbcTemplate.class);
 	}
 	

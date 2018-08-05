@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
-public class DefaultWiringConfig {
+public class DefaultDataSourceConfig {
 	
 	@Bean
 	public DataSource dataSource() {

@@ -6,9 +6,9 @@ import yiban.auth.beans.UserInfo;
 import yiban.auth.dao.UserRepository;
 
 @ComponentScan(basePackages = "yiban.auth.beans")
-public class UserQuery {
+public class UserQueryService {
 	
-	public static UserInfo findByID(String ID) {
+	public static UserInfo findByID(String ID) { // TODO static的理由是？
 		/*
 		 * UserRepository userRepository = ctx.getBean(UserDao.class); 
 		 * TODO 千万不能通过new实例化！写篇文章记下来。
