@@ -7,3 +7,5 @@
 8.5|今天学习了一个用来处理并发的模块concurrent.futures，主要的两个类ThreadPoolExecutor和ProcessPoolExecutor内部维护着一个线程池或者进程池，感觉很方便，但是实际使用的时候可能封装级别较低的Threading和multiprocessing这两个模块可能更加灵活。
 8.6|今日进度：无
 8.7|1、今天学习了协程的使用，两个扩展包greenlet和gevent模块，使用协程实现并发</br>2、看了一下python标准库里面的协程asyncio模块，不过感觉很难，暂时还没有看懂。
+8.8|今日进度：无
+8.9|1、今天继续学习了asyncio模块</br>2、今天对之前线程池，进程池以及线程进程通信做了一个小结
