@@ -13,3 +13,4 @@
 8.11|1、学习了tornado框架中的websocket的使用</br>2、开始学习python的元编程，正在看动态属性和特性
 8.12|1、继续学习元编程，创建描述符</br>2、正在学习shell编程
 8.13|1、学习创建元类，以及与普通类的关系</br>2、复习了tornado异步的使用
+8.14|1、学习shell编程，if，for，while语句，按照视频写了个简单的MySQL数据库自动备份脚本</br>2、学习了jQuery中使用Ajax与tornado进行数据交互
