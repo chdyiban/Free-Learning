@@ -16,3 +16,4 @@
 8.14|1、学习shell编程，if，for，while语句，按照视频写了个简单的MySQL数据库自动备份脚本</br>2、学习了jQuery中使用Ajax与tornado进行数据交互
 8.15|无
 8.16|学习shell编程，学习了until，case，select语句以及数组和函数，学习sed，grep，awk以及find的基本使用
+8.17|学习使用Supervisor来监控tornado进程
