@@ -18,3 +18,4 @@
 8.16|学习shell编程，学习了until，case，select语句以及数组和函数，学习sed，grep，awk以及find的基本使用
 8.17|学习使用Supervisor来监控tornado进程
 8.18|1、学习numpy的基本使用</br>2、学习使用pandas进行数据处理
+8.19|1、学习pandas里面一些处理数据的操作</br>2、今天开始学习matplotlib
