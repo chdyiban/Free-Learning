@@ -19,3 +19,4 @@
 8.17|学习使用Supervisor来监控tornado进程
 8.18|1、学习numpy的基本使用</br>2、学习使用pandas进行数据处理
 8.19|1、学习pandas里面一些处理数据的操作</br>2、今天开始学习matplotlib
+8.20|今日进度：继续学习了一点点matplotlib进行数据可视化
