@@ -21,21 +21,21 @@ import java.io.Closeable;
 public class LdapChecker implements Closeable {
 	
 	@Autowired
-    private LdapContext ctx;
+    private LdapContext ldapContext;
 	
 	@Autowired
 	private String BASEDN;
 
-    public static void main(String[] args){
-		// 登录用户的用户名和密码
-    	// TODO DEBUG-ONLY
-        String username = "Jack";
-        String password = "980309";
-        
-        LdapChecker checker = new LdapChecker();
-        System.out.println(checker.authenticate(username, password));
-        checker.close();
-    }
+//    public static void main(String[] args){
+//		// 登录用户的用户名和密码
+//    	// TODO DEBUG-ONLY
+//        String username = "Jack";
+//        String password = "980309";
+//        
+//        LdapChecker checker = new LdapChecker();
+//        System.out.println(checker.authenticate(username, password));
+//        checker.close();
+//    }
 
     /**
      * 与LDAP服务器通信，根据（唯一的）用户名查询该用户是否存在，以及密码是否匹配
@@ -64,9 +64,9 @@ public class LdapChecker implements Closeable {
             return false;
         }
         try {
-            ctx.addToEnvironment(Context.SECURITY_PRINCIPAL, userDN);
-            ctx.addToEnvironment(Context.SECURITY_CREDENTIALS, pwd);
-            ctx.reconnect(ctx.getConnectControls());
+        	ldapContext.addToEnvironment(Context.SECURITY_PRINCIPAL, userDN);
+        	ldapContext.addToEnvironment(Context.SECURITY_CREDENTIALS, pwd);
+        	ldapContext.reconnect(ldapContext.getConnectControls());
             validatedFlag = true;
         } catch (AuthenticationException e) {
             System.out.println(userDN + " is not authenticated");
@@ -84,7 +84,7 @@ public class LdapChecker implements Closeable {
      */
     public void close(){
         try {
-            if(ctx != null) ctx.close();
+            if(ldapContext != null) ldapContext.close();
         } catch (NamingException ex) {}
     }
 
@@ -99,7 +99,7 @@ public class LdapChecker implements Closeable {
         try{
             SearchControls constraints = new SearchControls();
             constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);
-            NamingEnumeration<SearchResult> en = ctx.search("", key + "=" + val, constraints);
+            NamingEnumeration<SearchResult> en = ldapContext.search("", key + "=" + val, constraints);
             if(en == null){
                 System.out.println("Have no NamingEnumeration.");
             }

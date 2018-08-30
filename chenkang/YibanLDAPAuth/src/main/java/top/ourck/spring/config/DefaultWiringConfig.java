@@ -7,13 +7,12 @@ import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import top.ourck.dao.LdapChecker;
+import top.ourck.service.UserService;
 
 @Configuration
-@ComponentScan(basePackages={"top.ourck.dao"})
 public class DefaultWiringConfig {
 
     // TODO 定义LDAP的基本连接信息 在这里写死真的好吗？
@@ -29,7 +28,7 @@ public class DefaultWiringConfig {
      * 获得用于取得上下文的Controls本身
      * @return Control[]对象
      */
-    @Bean
+    @Bean(name="BASEDN")
     public String baseDN() {
     	return BASEDN;
     }
@@ -64,5 +63,10 @@ public class DefaultWiringConfig {
     @Bean
     public LdapChecker ldapChecker() {
     	return new LdapChecker();
+    }
+    
+    @Bean
+    public UserService userService() {
+    	return new UserService();
     }
 }

@@ -1,7 +1,6 @@
 package top.ourck.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import top.ourck.dao.LdapChecker;
 import top.ourck.entity.AccountInfo;
@@ -12,11 +11,10 @@ import top.ourck.entity.AccountInfo;
  * TODO Service的周期？By session / by what？
  * @author ourck
  */
-@Service
 public class UserService {
 	
 	@Autowired
-	LdapChecker checker;
+	LdapChecker ldapChecker;
 	
 	/**
 	 * 根据提供的用户名和密码进行校验。
@@ -25,8 +23,8 @@ public class UserService {
 	 * @return 校验成功标志
 	 */
 	public boolean getAuth(String usr, String pwd) {
-		AccountInfo account = checker.qForAccountInfo(usr, pwd); //别把这玩意返回前台！这里边有密码
-		checker.close();
+		AccountInfo account = ldapChecker.qForAccountInfo(usr, pwd); //别把这玩意返回前台！这里边有密码
+		ldapChecker.close();
 		
 		if(account != null) return true;
 		else return false;
