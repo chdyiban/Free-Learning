@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import yiban.dorm.beans.UserInfo;
 
-@Repository // TODO ?
+@Repository
 /**
  * @see https://bbs.csdn.net/topics/310103844
  * @author ourck
@@ -59,4 +59,5 @@ public class UserRepository {
 //		for(Object obj : data) System.out.print(obj + " ");
 		jdbcTemplate.update(sql, data);
 	}
+	
 }

@@ -21,7 +21,7 @@ public class UserInfoMgr {
 			user.setOpenScore(user.getOpenScore() + tagInfo.getOpenScore());
 			user.setRespScore(user.getRespScore() + tagInfo.getRespScore());
 			user.setExtrScore(user.getExtrScore() + tagInfo.getExtrScore());
-			user.getAgreScore(user.getAgreScore() + tagInfo.getAgreScore());
+			user.setAgreScore(user.getAgreScore() + tagInfo.getAgreScore());
 			user.setNeurScore(user.getNeurScore() + tagInfo.getNeurScore());
 		}
 	}
@@ -29,5 +29,6 @@ public class UserInfoMgr {
 	public void addUser(UserInfo user) {
 		userRepository.addUser(user);
 	}
+	
 	
 }

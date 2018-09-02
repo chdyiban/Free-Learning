@@ -23,7 +23,7 @@ public class UserInfo {
 	public void setOpenScore(int val) { this.openScore = val; }
 	public void setRespScore(int val) { this.respScore = val; }
 	public void setExtrScore(int val) { this.extrScore = val; }
-	public void getAgreScore(int val) { this.agreScore = val; }
+	public void setAgreScore(int val) { this.agreScore = val; }
 	public void setNeurScore(int val) { this.neurScore = val; }
 	
 	public String getUserName() { return userName; }
