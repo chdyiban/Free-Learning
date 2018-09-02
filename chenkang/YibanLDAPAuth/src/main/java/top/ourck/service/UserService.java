@@ -1,5 +1,7 @@
 package top.ourck.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import top.ourck.dao.LdapChecker;
 import top.ourck.entity.AccountInfo;
 
@@ -11,7 +13,8 @@ import top.ourck.entity.AccountInfo;
  */
 public class UserService {
 	
-	AccountInfo account;
+	@Autowired
+	LdapChecker ldapChecker;
 	
 	/**
 	 * 根据提供的用户名和密码进行校验。
@@ -20,17 +23,11 @@ public class UserService {
 	 * @return 校验成功标志
 	 */
 	public boolean getAuth(String usr, String pwd) {
-		LdapChecker checker = new LdapChecker();
-		account = checker.qForAccountInfo(usr, pwd); //别把这玩意返回前台！这里边有密码
-		checker.close();
+		AccountInfo account = ldapChecker.qForAccountInfo(usr, pwd); //别把这玩意返回前台！这里边有密码
+		ldapChecker.close();
 		
 		if(account != null) return true;
 		else return false;
 	}
 	
-	/**
-	 * @deprecated [DEBUG-ONLY] 不应该将包含有密码的用户信息实体返回给前台
-	 * @return 用户信息实体
-	 */
-	public AccountInfo getAccountInfo() { return account; } // TODO DEBUG-ONLY
 }

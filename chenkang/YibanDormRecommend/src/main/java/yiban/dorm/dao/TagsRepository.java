@@ -25,7 +25,7 @@ public class TagsRepository {
 	public TagInfo getTagByName(String tagName) {
 		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE tag_name = ?";
 		TagInfo result = jdbcTemplate.queryForObject(sql, new Object[] { tagName }, new TagRowMapper());
-		System.out.println(result);
+//		System.out.println(result); // TODO DEBUG-ONLY
 		return result;
 	}
 }
