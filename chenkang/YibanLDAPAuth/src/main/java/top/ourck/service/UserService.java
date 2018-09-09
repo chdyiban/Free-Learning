@@ -23,11 +23,10 @@ public class UserService {
 	 * @return 校验成功标志
 	 */
 	public boolean getAuth(String usr, String pwd) {
-		AccountInfo account = ldapChecker.qForAccountInfo(usr, pwd); //别把这玩意返回前台！这里边有密码
-		ldapChecker.close();
+		AccountInfo account = ldapChecker.authenticate(usr, pwd); //别把这玩意返回前台！这里边有密码
 		
-		if(account != null) return true;
-		else return false;
+		if(account != null)		return true;
+		else 					return false;
 	}
 	
 }
