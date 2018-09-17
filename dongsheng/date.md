@@ -26,3 +26,4 @@
 9.4~9.12|今日进度：几乎为无，没怎么记录
 9.13|1、今天尝试写了异步代码替换之前使用requests库写的阻塞代码，之前的代码完全没有用到tornado的异步特性，对于性能没有什么提升。</br>2、重新看了看tornado里面关于协程的使用以及python中新加入的关键词async和await
 9.14|完成部署，在服务器创建了一个拥有sudo权限的用户py，编译安装了python3.7和一些附件，以及使用python2安装了supervisor监控tornado进程，修改了nginx配置文件，增加了upstream和server用来做tornado的负载均衡。使用python2安装了virtualenv来创建虚拟环境
+9.15|1、学习了一些关于代码检查代码测试的内容</br>2、看看了逻辑回归算法的讲解视频
